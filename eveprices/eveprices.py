@@ -15,6 +15,7 @@ class eve_prices:
         self.mckey = mckey
         self.mcserver = mcserver
         self.regionID = int(regionID)
+        typeID = 0
 
     def getPrice(self, typeID, orderType = 'buy', dataType = 'median'):
         """
@@ -42,7 +43,7 @@ class eve_prices:
         """
         Retreives prices from Eve-Central
         """
-        conn = httplib.HTTPConnection(self.ecapi)
+        conn = httplib.HTTPConnection(self.echost)
         conn.request("GET", "/api/marketstat/?typeid=%i&regionlimit=%i" % (typeID, self.regionID))
         res = conn.getresponse()
         marketRaw = xmltodict.parse(res.read())
@@ -64,7 +65,7 @@ class eve_prices:
         return retVal
 
     def e43pricing(self, typeID):
-        conn = httplib.HTTPConnection(self.e43api)
+        conn = httplib.HTTPConnection(self.e43host)
         conn.request("GET", "/market/api/marketstat/?typeid=%i&regionlimit=%i" % (typeID, self.regionID))
         res = conn.getresponse()
         marketRaw = xmltodict.parse(res.read())
