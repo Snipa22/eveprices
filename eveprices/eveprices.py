@@ -34,7 +34,7 @@ class eve_prices:
                 priceData = self.psqlpricing(typeID)
             else:
                 priceData = self.ecpricing(typeID)
-            mc.set(self.mckey + "price" + str(typeID) + priceType, priceData, 1200)
+            mc.set(self.mckey + "price" + str(typeID) + self.priceType, priceData, 1200)
         else:
             priceData = mc.get(self.mckey + "price" + str(typeID) + str(self.regionID) + self.priceType)
         return priceData[orderType][dataType]
