@@ -48,7 +48,7 @@ class eveprices:
         res = conn.getresponse()
         try:
             content = res.read()
-            if content = "The request contains bad syntax or cannot be fulfilled.":
+            if content == "The request contains bad syntax or cannot be fulfilled.":
                 raise ValueError
             marketRaw = xmltodict.parse(content)
             conn.close()
@@ -90,7 +90,7 @@ class eveprices:
         res = conn.getresponse()
         try:
             content = res.read()
-            if content = "The request contains bad syntax or cannot be fulfilled.":
+            if content == "The request contains bad syntax or cannot be fulfilled.":
                 raise ValueError
             marketRaw = xmltodict.parse(content)
             conn.close()
