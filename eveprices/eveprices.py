@@ -37,7 +37,7 @@ class eveprices:
             mc.set(self.mckey + "price" + str(typeID) + self.priceType, priceData, 1200)
         else:
             priceData = mc.get(self.mckey + "price" + str(typeID) + str(self.regionID) + self.priceType)
-        return priceData[orderType][dataType]
+        return float(priceData[orderType][dataType])
 
     def ecpricing(self, typeID):
         """
