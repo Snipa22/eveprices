@@ -10,7 +10,7 @@ setup(
     url='http://snipanet.com',
     license='LICENSE.txt',
     description='Eve-Online Price Aggrigator in Python',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
     install_requires=[
         "pylibmc",
         "xmltodict",
