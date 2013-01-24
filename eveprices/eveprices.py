@@ -46,44 +46,78 @@ class eveprices:
         conn = httplib.HTTPConnection(self.echost)
         conn.request("GET", "/api/marketstat/?typeid=%i&regionlimit=%i" % (typeID, self.regionID))
         res = conn.getresponse()
-        marketRaw = xmltodict.parse(res.read())
-        conn.close()
-        retVal = {
-            'buy': {
-                'mean': marketRaw['evec_api']['marketstat']['type']['buy']['avg'],
-                'max': marketRaw['evec_api']['marketstat']['type']['buy']['max'],
-                'min': marketRaw['evec_api']['marketstat']['type']['buy']['min'],
-                'median': marketRaw['evec_api']['marketstat']['type']['buy']['median'],
-            },
-            'sell': {
-                'mean': marketRaw['evec_api']['marketstat']['type']['sell']['avg'],
-                'max': marketRaw['evec_api']['marketstat']['type']['sell']['max'],
-                'min': marketRaw['evec_api']['marketstat']['type']['sell']['min'],
-                'median': marketRaw['evec_api']['marketstat']['type']['sell']['median'],
-            },
-        }
+        try:
+            marketRaw = xmltodict.parse(res.read())
+            conn.close()
+            retVal = {
+                'buy': {
+                    'mean': marketRaw['evec_api']['marketstat']['type']['buy']['avg'],
+                    'max': marketRaw['evec_api']['marketstat']['type']['buy']['max'],
+                    'min': marketRaw['evec_api']['marketstat']['type']['buy']['min'],
+                    'median': marketRaw['evec_api']['marketstat']['type']['buy']['median'],
+                },
+                'sell': {
+                    'mean': marketRaw['evec_api']['marketstat']['type']['sell']['avg'],
+                    'max': marketRaw['evec_api']['marketstat']['type']['sell']['max'],
+                    'min': marketRaw['evec_api']['marketstat']['type']['sell']['min'],
+                    'median': marketRaw['evec_api']['marketstat']['type']['sell']['median'],
+                },
+            }
+        except:
+            conn.close()
+            retVal = {
+                'buy': {
+                    'mean': 0,
+                    'max': 0,
+                    'min': 0,
+                    'median': 0,
+                },
+                'sell': {
+                    'mean': 0,
+                    'max': 0,
+                    'min': 0,
+                    'median': 0,
+                },
+            }
         return retVal
 
     def e43pricing(self, typeID):
         conn = httplib.HTTPConnection(self.e43host)
         conn.request("GET", "/market/api/marketstat/?typeid=%i&regionlimit=%i" % (typeID, self.regionID))
         res = conn.getresponse()
-        marketRaw = xmltodict.parse(res.read())
-        conn.close()
-        retVal = {
-            'buy': {
-                'mean': marketRaw['evec_api']['marketstat']['type']['buy']['avg'],
-                'max': marketRaw['evec_api']['marketstat']['type']['buy']['max'],
-                'min': marketRaw['evec_api']['marketstat']['type']['buy']['min'],
-                'median': marketRaw['evec_api']['marketstat']['type']['buy']['median'],
-            },
-            'sell': {
-                'mean': marketRaw['evec_api']['marketstat']['type']['sell']['avg'],
-                'max': marketRaw['evec_api']['marketstat']['type']['sell']['max'],
-                'min': marketRaw['evec_api']['marketstat']['type']['sell']['min'],
-                'median': marketRaw['evec_api']['marketstat']['type']['sell']['median'],
-            },
-        }
+        try:
+            marketRaw = xmltodict.parse(res.read())
+            conn.close()
+            retVal = {
+                'buy': {
+                    'mean': marketRaw['evec_api']['marketstat']['type']['buy']['avg'],
+                    'max': marketRaw['evec_api']['marketstat']['type']['buy']['max'],
+                    'min': marketRaw['evec_api']['marketstat']['type']['buy']['min'],
+                    'median': marketRaw['evec_api']['marketstat']['type']['buy']['median'],
+                },
+                'sell': {
+                    'mean': marketRaw['evec_api']['marketstat']['type']['sell']['avg'],
+                    'max': marketRaw['evec_api']['marketstat']['type']['sell']['max'],
+                    'min': marketRaw['evec_api']['marketstat']['type']['sell']['min'],
+                    'median': marketRaw['evec_api']['marketstat']['type']['sell']['median'],
+                },
+            }
+        except:
+            conn.close()
+            retVal = {
+                'buy': {
+                    'mean': 0,
+                    'max': 0,
+                    'min': 0,
+                    'median': 0,
+                },
+                'sell': {
+                    'mean': 0,
+                    'max': 0,
+                    'min': 0,
+                    'median': 0,
+                },
+            }
         return retVal
 
 
