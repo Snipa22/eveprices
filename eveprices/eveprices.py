@@ -3,7 +3,7 @@ import httplib
 import xmltodict
 
 class eve_prices:
-    def __init__(self, priceType = 'ec', echost = 'api.eve-central.com', e43host = 'element-43.com', psqlhost = 'localhost', psqlname = 'element43', psqluser = 'element43', psqlpass = 'element43', psqlport = '6432', mckey = 'pricekey', mcserver = [127.0.0.1], regionID = 10000002):
+    def __init__(self, priceType = 'ec', echost = 'api.eve-central.com', e43host = 'element-43.com', psqlhost = 'localhost', psqlname = 'element43', psqluser = 'element43', psqlpass = 'element43', psqlport = '6432', mckey = 'pricekey', mcserver = ['127.0.0.1'], regionID = 10000002):
         self.priceType = priceType
         self.echost = echost
         self.e43host = e43host
