@@ -6,7 +6,7 @@ setup(
     author='Alexander Blair (Feanos)',
     author_email='alex@snipanet.com',
     packages=['eveprices'],
-    scripts=['bin/eveprices.py'],
+    scripts=[],
     url='http://snipanet.com',
     license='LICENSE.txt',
     description='Eve-Online Price Aggrigator in Python',
