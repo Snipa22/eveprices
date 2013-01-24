@@ -47,7 +47,10 @@ class eveprices:
         conn.request("GET", "/api/marketstat/?typeid=%i&regionlimit=%i" % (typeID, self.regionID))
         res = conn.getresponse()
         try:
-            marketRaw = xmltodict.parse(res.read())
+            content = res.read()
+            if content = "The request contains bad syntax or cannot be fulfilled.":
+                raise ValueError
+            marketRaw = xmltodict.parse(content)
             conn.close()
             retVal = {
                 'buy': {
@@ -86,7 +89,10 @@ class eveprices:
         conn.request("GET", "/market/api/marketstat/?typeid=%i&regionlimit=%i" % (typeID, self.regionID))
         res = conn.getresponse()
         try:
-            marketRaw = xmltodict.parse(res.read())
+            content = res.read()
+            if content = "The request contains bad syntax or cannot be fulfilled.":
+                raise ValueError
+            marketRaw = xmltodict.parse(content)
             conn.close()
             retVal = {
                 'buy': {
