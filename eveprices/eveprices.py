@@ -60,12 +60,14 @@ class eveprices:
                     'max': marketRaw['evec_api']['marketstat']['type']['buy']['max'],
                     'min': marketRaw['evec_api']['marketstat']['type']['buy']['min'],
                     'median': marketRaw['evec_api']['marketstat']['type']['buy']['median'],
+                    'volume': marketRaw['evec_api']['marketstat']['type']['buy']['volume'],
                 },
                 'sell': {
                     'mean': marketRaw['evec_api']['marketstat']['type']['sell']['avg'],
                     'max': marketRaw['evec_api']['marketstat']['type']['sell']['max'],
                     'min': marketRaw['evec_api']['marketstat']['type']['sell']['min'],
                     'median': marketRaw['evec_api']['marketstat']['type']['sell']['median'],
+                    'volume': marketRaw['evec_api']['marketstat']['type']['buy']['volume'],
                 },
             }
         except:

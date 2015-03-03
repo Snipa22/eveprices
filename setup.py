@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='EvePrices',
-    version='0.0.2',
+    version='0.0.3',
     author='Alexander Blair (Impala59)',
     author_email='alex@snipanet.com',
     packages=['eveprices'],
