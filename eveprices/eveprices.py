@@ -1,9 +1,12 @@
-import pylibmc
 import httplib
 import xmltodict
+from couchbase import Couchbase
+from couchbase.exceptions import CouchbaseError
 
 class eveprices:
-    def __init__(self, priceType = 'ec', echost = 'api.eve-central.com', e43host = 'element-43.com', psqlhost = 'localhost', psqlname = 'element43', psqluser = 'element43', psqlpass = 'element43', psqlport = '6432', mckey = 'pricekey', mcserver = ['127.0.0.1'], regionID = 10000002):
+    def __init__(self, priceType='e43', echost='api.eve-central.com', e43host='element-43.com',
+                 psqlhost = 'localhost', psqlname='element43', psqluser='element43', psqlpass = 'element43',
+                 psqlport = '6432', cbserver = '127.0.0.1', regionID = 10000002, cbucket='prices', cbpass='prices'):
         self.priceType = priceType
         self.echost = echost
         self.e43host = e43host
@@ -12,12 +15,11 @@ class eveprices:
         self.psqluser = psqluser
         self.psqlpass = psqlpass
         self.psqlport = psqlport
-        self.mckey = mckey
-        self.mcserver = mcserver
+        self.cache = Couchbase.connect(cbucket, cbserver, password=cbpass)
         self.regionID = int(regionID)
         typeID = 0
 
-    def getPrice(self, typeID, orderType = 'buy', dataType = 'median'):
+    def getPrice(self, typeID, orderType='buy', dataType='median'):
         """
         Retreives prices from the various price providers for eve-online.
 
@@ -26,17 +28,17 @@ class eveprices:
         @param string dataType  mean/median/max/min pricing data
         """
         typeID = int(typeID)
-        mc = pylibmc.Client(self.mcserver, binary=True, behaviors={"tcp_nodelay": True, "ketama": True})
-        if self.mckey + "price" + str(typeID) + str(self.regionID) + self.priceType not in mc:
+        key = str(typeID) + str(self.regionID) + self.priceType
+        try:
+            priceData = self.cache.get(key).value
+        except CouchbaseError:
             if self.priceType == 'e43':
                 priceData = self.e43pricing(typeID)
             elif self.priceType == 'psql':
                 priceData = self.psqlpricing(typeID)
             else:
                 priceData = self.ecpricing(typeID)
-            mc.set(self.mckey + "price" + str(typeID) + str(self.regionID) + self.priceType, priceData, 1200)
-        else:
-            priceData = mc.get(self.mckey + "price" + str(typeID) + str(self.regionID) + self.priceType)
+            self.cache.add(key, priceData, ttl=1200)
         return float(priceData[orderType][dataType])
 
     def ecpricing(self, typeID):
